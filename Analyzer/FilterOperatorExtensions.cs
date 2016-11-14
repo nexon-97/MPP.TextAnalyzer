@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace Analyzer
+namespace Analyzer.Extensions
 {
 	using ConditionalOperatorDelegate = Func<Expression, Expression, Expression>;
 

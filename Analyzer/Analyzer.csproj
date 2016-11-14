@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnalyzerElement.cs" />
     <Compile Include="ExpressionBuilder.cs" />
     <Compile Include="Filter.cs" />
     <Compile Include="FilterOperator.cs" />
@@ -48,7 +49,21 @@
     <Compile Include="ILogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryParser.cs" />
+    <Compile Include="StateMachine\Rules\FinishRule.cs" />
+    <Compile Include="StateMachine\States\FinalState.cs" />
+    <Compile Include="StateMachine\States\UnaryOperatorState.cs" />
+    <Compile Include="StateMachine\States\IdleState.cs" />
+    <Compile Include="StateMachine\States\IState.cs" />
+    <Compile Include="StateMachine\Rules\OperandRule.cs" />
+    <Compile Include="StateMachine\Rules\ITransitionRule.cs" />
+    <Compile Include="StateMachine\Rules\UnaryOperatorRule.cs" />
+    <Compile Include="StateMachine\Rules\BinaryOperatorRule.cs" />
+    <Compile Include="StateMachine\StateMachine.cs" />
+    <Compile Include="StateMachine\StateMachineException.cs" />
+    <Compile Include="StateMachine\States\BinaryOperatorState.cs" />
+    <Compile Include="StateMachine\States\OperandState.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

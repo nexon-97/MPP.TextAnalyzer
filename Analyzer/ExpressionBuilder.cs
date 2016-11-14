@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Collections.Generic;
 
 namespace Analyzer
 {
@@ -25,52 +26,7 @@ namespace Analyzer
 			}
 
 			QueryParser parser = new QueryParser();
-			string[] components = parser.Parse(expression);
-
-
-			return null;
-		}
-
-		private Expression ComposeNextPair(Expression current, string[] text, string[] elements)
-		{
-			if (elements.Length < 2)
-			{
-				throw new ArgumentException("Unable to add condition.");
-			}
-
-			bool hasLValue = (current != null);
-
-			// Get next operator
-			int operatorPosition = hasLValue ? 0 : 1;
-			FilterOperator? o = elements[operatorPosition].ToFilterOperator();
-			if (o == null)
-			{
-				return null;
-			}
-
-			// Get operator expression
-			var operatorExpression = o.Value.GetExpressionDelegate();
-
-			if (hasLValue)
-			{
-				//return OccurenceCondition;
-				//return operatorExpression(current, );
-			}
-			else
-			{
-				return operatorExpression(OccurenceCondition, OccurenceCondition);
-
-				//Expression.Constant(elements[0]);
-
-				
-				//Expression.Constant(text);
-				//Expression.Constant(elements[2]);
-			}
-
-			int rValuePosition = hasLValue ? 1 : 2;
-			string rValue = elements[rValuePosition];
-
-
+			List<AnalyzerElement> components = parser.Parse(expression);
 
 
 			return null;
@@ -84,7 +40,7 @@ namespace Analyzer
 			}
 		}
 
-		public Expression<FilterDelegate> BuildContainerCheck(Expression<LeafDelegate> equalityCheck)
+		private Expression<FilterDelegate> BuildContainerCheck(Expression<LeafDelegate> equalityCheck)
 		{
 			ParameterExpression container = Expression.Parameter(typeof(string[]), "container");
 			Predicate<string> predicate = new Predicate<string>(equalityCheck.Compile());
@@ -96,7 +52,7 @@ namespace Analyzer
 			return Expression.Lambda<FilterDelegate>(existsCall, new[] { container });
 		}
 
-		public Expression<LeafDelegate> BuildEqualityCheck(string value)
+		private Expression<LeafDelegate> BuildEqualityCheck(string value)
 		{
 			ParameterExpression pe = Expression.Parameter(typeof(string), "o");
 			ConstantExpression constant = Expression.Constant(value, typeof(string));
@@ -107,9 +63,9 @@ namespace Analyzer
 			return Expression.Lambda<LeafDelegate>(equalsCall, new[] { pe });
 		}
 
-		public Expression<LeafDelegate> JoinExpressions(LambdaExpression left, LambdaExpression right, FilterOperator op)
+		private Expression<FilterDelegate> JoinExpressions(LambdaExpression left, LambdaExpression right, FilterOperator op)
 		{
-			ParameterExpression param = Expression.Parameter(typeof(string), "x");
+			ParameterExpression param = Expression.Parameter(typeof(string[]), "container");
 
 			var invokeLeft = Expression.Invoke(left, new[] { param });
 			var invokeRight = Expression.Invoke(right, new[] { param });
@@ -128,7 +84,7 @@ namespace Analyzer
 					break;
 			}
 
-			return Expression.Lambda<LeafDelegate>(body, new[] { param });
+			return Expression.Lambda<FilterDelegate>(body, new[] { param });
 		}
 	}
 }
