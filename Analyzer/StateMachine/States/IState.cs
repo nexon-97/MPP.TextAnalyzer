@@ -2,6 +2,6 @@
 {
 	internal interface IState
 	{
-		void OnStateEnter(IState from);
+		void OnStateEnter(IState from, string item);
 	}
 }

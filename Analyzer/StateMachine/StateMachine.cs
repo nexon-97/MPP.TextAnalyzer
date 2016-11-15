@@ -86,7 +86,7 @@ namespace Analyzer.StateMachine
 			else if (validRules.Count > 0)
 			{
 				var pickedRule = PickRuleWithHighestPriority(validRules);
-				SwitchState(pickedRule.DestState);
+				SwitchState(pickedRule.DestState, item);
 			}
 			else
 			{
@@ -94,9 +94,9 @@ namespace Analyzer.StateMachine
 			}
 		}
 
-		private void SwitchState(IState state)
+		private void SwitchState(IState state, string item)
 		{
-			state.OnStateEnter(CurrentState);
+			state.OnStateEnter(CurrentState, item);
 
 			CurrentState = state;
 		}

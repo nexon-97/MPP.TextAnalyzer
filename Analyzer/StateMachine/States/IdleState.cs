@@ -1,8 +1,8 @@
 ﻿namespace Analyzer.StateMachine.States
 {
-	internal class IdleState : IState
+	internal class IdleState : BaseState, IState
 	{
-		public void OnStateEnter(IState from)
+		public void OnStateEnter(IState from, string item)
 		{
 			
 		}
