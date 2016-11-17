@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Collections.Generic;
 
 namespace Analyzer
 {
@@ -26,8 +25,12 @@ namespace Analyzer
 			}
 
 			QueryParser parser = new QueryParser();
-			List<AnalyzerElement> components = parser.Parse(expression);
+			AnalyzerElement rootComponent = parser.Parse(expression);
 
+			if (rootComponent != null)
+			{
+				return rootComponent.ToExpression();
+			}
 
 			return null;
 		}
@@ -40,7 +43,7 @@ namespace Analyzer
 			}
 		}
 
-		private Expression<FilterDelegate> BuildContainerCheck(Expression<LeafDelegate> equalityCheck)
+		public Expression<FilterDelegate> BuildContainerCheck(Expression<LeafDelegate> equalityCheck)
 		{
 			ParameterExpression container = Expression.Parameter(typeof(string[]), "container");
 			Predicate<string> predicate = new Predicate<string>(equalityCheck.Compile());
@@ -52,7 +55,7 @@ namespace Analyzer
 			return Expression.Lambda<FilterDelegate>(existsCall, new[] { container });
 		}
 
-		private Expression<LeafDelegate> BuildEqualityCheck(string value)
+		public Expression<LeafDelegate> BuildEqualityCheck(string value)
 		{
 			ParameterExpression pe = Expression.Parameter(typeof(string), "o");
 			ConstantExpression constant = Expression.Constant(value, typeof(string));
@@ -63,14 +66,14 @@ namespace Analyzer
 			return Expression.Lambda<LeafDelegate>(equalsCall, new[] { pe });
 		}
 
-		private Expression<FilterDelegate> JoinExpressions(LambdaExpression left, LambdaExpression right, FilterOperator op)
+		public Expression<FilterDelegate> JoinExpressions(LambdaExpression left, LambdaExpression right, FilterOperator op)
 		{
 			ParameterExpression param = Expression.Parameter(typeof(string[]), "container");
 
 			var invokeLeft = Expression.Invoke(left, new[] { param });
 			var invokeRight = Expression.Invoke(right, new[] { param });
 
-			BinaryExpression body = null;
+			Expression body = null;
 			switch (op)
 			{
 				case FilterOperator.And:
@@ -80,7 +83,7 @@ namespace Analyzer
 					body = Expression.OrElse(invokeLeft, invokeRight);
 					break;
 				case FilterOperator.Not:
-					body = Expression.NotEqual(invokeLeft, invokeRight);
+					body = Expression.Not(invokeRight);
 					break;
 			}
 

@@ -6,7 +6,6 @@ namespace Analyzer
 
 	public sealed class Filter : IFilter
 	{
-		// скомпилированное в делегат дерево выражений
 		private readonly FilterDelegate filter;
 
 		public Filter(FilterDelegate filter)

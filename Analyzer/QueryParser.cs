@@ -12,7 +12,7 @@ namespace Analyzer
 			' '
 		};
 
-		public List<AnalyzerElement> Parse(string query)
+		public AnalyzerElement Parse(string query)
 		{
 			if (query == null)
 			{
@@ -20,8 +20,6 @@ namespace Analyzer
 			}
 
 			string[] queryParts = ConvertToStringArray(query);
-
-			List<AnalyzerElement> elements = new List<AnalyzerElement>();
 
 			var fsm = new StateMachine.StateMachine();
 			foreach (var item in queryParts)
@@ -38,8 +36,12 @@ namespace Analyzer
 			}
 
 			bool queryValid = ValidateFinalState(fsm);
+			if (queryValid)
+			{
+				return (fsm.CurrentState as StateMachine.States.BaseState).Element;
+			}
 
-			return elements;
+			return null;
 		}
 
 		private string[] ConvertToStringArray(string query)

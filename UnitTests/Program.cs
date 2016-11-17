@@ -1,30 +1,29 @@
 ﻿using System;
 using Analyzer;
-using System.Linq.Expressions;
 
 namespace UnitTests
 {
-	using FilterDelegate = Func<string[], bool>;
-	using LeafDelegate = Func<string, bool>;
-
 	internal class Program
 	{
 		static void Main(string[] args)
 		{
+			string[] input =
+			{
+				"thor", "fucks", "loki", "hard"
+			};	
+
 			ExpressionBuilder builder = new ExpressionBuilder();
 
-			builder.Build("thor and loki not");
-
-			/*Expression<FilterDelegate> filter = builder.Build("thor and loki");
-			FilterDelegate compiledFilter = filter.Compile();
-
-			string[] text =
+			var filterExpression = builder.Build("thor and loki");
+			if (filterExpression != null)
 			{
-				"thor", "loki", "loki", "hard"
-			};
-			bool contains = compiledFilter(text);
+				Console.WriteLine("Generated expression:\n" + filterExpression.ToString());
 
-			Console.WriteLine(contains.ToString());*/
+				Filter testFilter = new Filter(filterExpression.Compile());
+				bool valid = testFilter.Verify(input);
+
+				Console.WriteLine("Valid: " + valid.ToString());
+			}
 
 			Console.ReadLine();
 		}

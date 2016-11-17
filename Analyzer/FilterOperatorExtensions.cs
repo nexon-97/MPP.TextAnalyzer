@@ -28,19 +28,19 @@ namespace Analyzer.Extensions
 			return null;
 		}
 
-		public static ConditionalOperatorDelegate GetExpressionDelegate(this FilterOperator op)
+		public static ExpressionType GetExpressionDelegate(this FilterOperator op)
 		{
 			switch (op)
 			{
 				case FilterOperator.And:
-					return Expression.AndAlso;
+					return ExpressionType.AndAlso;
 				case FilterOperator.Or:
-					return Expression.OrElse;
+					return ExpressionType.OrElse;
 				case FilterOperator.Not:
-					return Expression.NotEqual;
-				default:
-					return null;
+					return ExpressionType.NotEqual;
 			}
+
+			return ExpressionType.Constant;
 		}
 	}
 }
