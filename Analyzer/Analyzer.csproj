@@ -40,20 +40,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnalyzerBinaryElement.cs" />
     <Compile Include="AnalyzerElement.cs" />
-    <Compile Include="AnalyzerUnaryElement.cs" />
     <Compile Include="ExpressionBuilder.cs" />
     <Compile Include="Filter.cs" />
     <Compile Include="FilterOperator.cs" />
     <Compile Include="FilterOperatorExtensions.cs" />
     <Compile Include="IFilter.cs" />
     <Compile Include="ILogger.cs" />
+    <Compile Include="PolishNotationBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryParser.cs" />
     <Compile Include="StateMachine\Rules\FinishRule.cs" />
+    <Compile Include="StateMachine\Rules\BraceOpenRule.cs" />
+    <Compile Include="StateMachine\Rules\BraceCloseRule.cs" />
     <Compile Include="StateMachine\States\BaseState.cs" />
     <Compile Include="StateMachine\States\FinalState.cs" />
+    <Compile Include="StateMachine\States\BraceOpenState.cs" />
+    <Compile Include="StateMachine\States\BraceCloseState.cs" />
     <Compile Include="StateMachine\States\UnaryOperatorState.cs" />
     <Compile Include="StateMachine\States\IdleState.cs" />
     <Compile Include="StateMachine\States\IState.cs" />

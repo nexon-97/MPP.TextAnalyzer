@@ -1,6 +1,6 @@
 ﻿namespace Analyzer.StateMachine.States
 {
-	internal class OperandState : BaseState, IState
+	internal class BraceOpenState : BaseState, IState
 	{
 		public void OnStateEnter(IState from, string item)
 		{

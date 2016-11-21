@@ -2,6 +2,6 @@
 {
 	internal class BaseState
 	{
-		public AnalyzerElement Element { get; set; }
+	
 	}
 }

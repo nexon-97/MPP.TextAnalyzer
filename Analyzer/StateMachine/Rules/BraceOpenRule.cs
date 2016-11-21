@@ -2,13 +2,15 @@
 
 namespace Analyzer.StateMachine.Rules
 {
-	internal sealed class FinishRule : ITransitionRule
+	internal sealed class BraceOpenRule : ITransitionRule
 	{
+		private const string BraceOpener = "(";
+
 		public IState SourceState { get; set; }
 		public IState DestState { get; set; }
 		public int Priority { get; set; }
 
-		public FinishRule(IState sourceState, IState destState, int priority)
+		public BraceOpenRule(IState sourceState, IState destState, int priority)
 		{
 			SourceState = sourceState;
 			DestState = destState;
@@ -17,7 +19,7 @@ namespace Analyzer.StateMachine.Rules
 
 		public bool CanTransit(string param)
 		{
-			return true;
+			return param.Equals(BraceOpener);
 		}
 	}
 }

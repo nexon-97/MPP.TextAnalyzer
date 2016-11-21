@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Collections.Generic;
 
 namespace Analyzer
 {
@@ -25,14 +26,9 @@ namespace Analyzer
 			}
 
 			QueryParser parser = new QueryParser();
-			AnalyzerElement rootComponent = parser.Parse(expression);
+			AnalyzerElement[] polishNotation = parser.Parse(expression);
 
-			if (rootComponent != null)
-			{
-				return rootComponent.ToExpression();
-			}
-
-			return null;
+			return BuildExpression(new Stack<AnalyzerElement>(polishNotation));
 		}
 
 		private void LogMessage(string message)
@@ -70,8 +66,11 @@ namespace Analyzer
 		{
 			ParameterExpression param = Expression.Parameter(typeof(string[]), "container");
 
-			var invokeLeft = Expression.Invoke(left, new[] { param });
-			var invokeRight = Expression.Invoke(right, new[] { param });
+			InvocationExpression invokeLeft = null;
+			InvocationExpression invokeRight = null;
+
+			if (left != null) invokeLeft = Expression.Invoke(left, new[] { param });
+			if (right != null) invokeRight = Expression.Invoke(right, new[] { param });
 
 			Expression body = null;
 			switch (op)
@@ -88,6 +87,37 @@ namespace Analyzer
 			}
 
 			return Expression.Lambda<FilterDelegate>(body, new[] { param });
+		}
+
+		private Expression<FilterDelegate> BuildExpression(Stack<AnalyzerElement> stack)
+		{
+			if (stack.Count > 0)
+			{
+				var element = stack.Pop();
+
+				if (element.IsOperator)
+				{
+					if (element.Operator == FilterOperator.Not)
+					{
+						var operandExpression = BuildExpression(stack);
+						return JoinExpressions(null, operandExpression, element.Operator);
+					}
+					else
+					{
+						var leftOperand = BuildExpression(stack);
+						var rightOperand = BuildExpression(stack);
+
+						return JoinExpressions(leftOperand, rightOperand, element.Operator);
+					}
+				}
+				else
+				{
+					var leaf = BuildEqualityCheck(element.Data);
+					return BuildContainerCheck(leaf);
+				}
+			}
+		
+			return null;
 		}
 	}
 }

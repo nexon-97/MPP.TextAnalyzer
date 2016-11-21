@@ -4,7 +4,7 @@
 	{
 		public void OnStateEnter(IState from, string item)
 		{
-			Element = (from as BaseState).Element;
+			
 		}
 	}
 }

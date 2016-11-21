@@ -3,8 +3,6 @@ using System.Linq.Expressions;
 
 namespace Analyzer.Extensions
 {
-	using ConditionalOperatorDelegate = Func<Expression, Expression, Expression>;
-
 	internal static class FilterOperatorExtensions
 	{
 		public static string AsString(this FilterOperator op)

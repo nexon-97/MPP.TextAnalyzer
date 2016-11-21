@@ -3,7 +3,7 @@ using Analyzer.StateMachine.States;
 
 namespace Analyzer.StateMachine.Rules
 {
-	internal class BinaryOperatorRule : ITransitionRule
+	internal sealed class BinaryOperatorRule : ITransitionRule
 	{
 		public IState SourceState { get; set; }
 		public IState DestState { get; set; }

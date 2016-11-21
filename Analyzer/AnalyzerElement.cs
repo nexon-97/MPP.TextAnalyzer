@@ -1,19 +1,9 @@
-﻿using System;
-using System.Linq.Expressions;
-
-namespace Analyzer
+﻿namespace Analyzer
 {
-	using FilterDelegate = Func<string[], bool>;
-
 	internal class AnalyzerElement
 	{
+		public bool IsOperator { get; set; }
+		public FilterOperator Operator { get; set; }
 		public string Data { get; set; }
-
-		public virtual Expression<FilterDelegate> ToExpression()
-		{
-			ExpressionBuilder builder = new ExpressionBuilder();
-			var equalityCheck = builder.BuildEqualityCheck(Data);
-			return builder.BuildContainerCheck(equalityCheck);
-		}
 	}
 }

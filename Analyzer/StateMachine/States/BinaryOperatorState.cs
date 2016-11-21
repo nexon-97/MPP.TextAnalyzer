@@ -6,17 +6,7 @@ namespace Analyzer.StateMachine.States
 	{
 		public void OnStateEnter(IState from, string item)
 		{
-			var element = new AnalyzerBinaryElement();
-			Element = element;
-
-			element.Data = item;
-			element.Operator = item.ToFilterOperator().Value;
 			
-			var operandState = from as OperandState;
-			if (operandState != null)
-			{
-				element.Left = operandState.Element;
-			}
 		}
 	}
 }

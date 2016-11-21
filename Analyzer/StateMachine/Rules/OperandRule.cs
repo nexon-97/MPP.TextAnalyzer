@@ -2,7 +2,7 @@
 
 namespace Analyzer.StateMachine.Rules
 {
-	internal class OperandRule : ITransitionRule
+	internal sealed class OperandRule : ITransitionRule
 	{
 		public IState SourceState { get; set; }
 		public IState DestState { get; set; }
