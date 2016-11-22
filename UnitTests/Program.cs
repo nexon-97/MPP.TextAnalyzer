@@ -12,8 +12,6 @@ namespace UnitTests
 			var filterExpression = builder.Build("not (thor and loki) or now");
 			if (filterExpression != null)
 			{
-				Console.WriteLine("Generated expression:\n" + filterExpression.ToString());
-
 				Filter testFilter = new Filter(filterExpression.Compile());
 
 				string[] input =

@@ -28,7 +28,12 @@ namespace Analyzer
 			QueryParser parser = new QueryParser();
 			AnalyzerElement[] polishNotation = parser.Parse(expression);
 
-			return BuildExpression(new Stack<AnalyzerElement>(polishNotation));
+			if (polishNotation != null)
+			{
+				return BuildExpression(new Stack<AnalyzerElement>(polishNotation));
+			}
+
+			return null;
 		}
 
 		private void LogMessage(string message)
