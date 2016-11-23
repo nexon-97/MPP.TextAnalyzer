@@ -123,7 +123,7 @@ namespace WpfClient.ViewModel
 			ShowError(false, string.Empty);
 		}
 
-		public void OnStartSearch(object param)
+		private void OnStartSearch(object param)
 		{
 			if (!Directory.Exists(DirectoryText))
 			{
