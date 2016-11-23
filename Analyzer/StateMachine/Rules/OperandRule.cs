@@ -1,4 +1,5 @@
 ﻿using Analyzer.StateMachine.States;
+using Analyzer.Extensions;
 
 namespace Analyzer.StateMachine.Rules
 {
@@ -17,7 +18,13 @@ namespace Analyzer.StateMachine.Rules
 
 		public bool CanTransit(string param)
 		{
-			return !string.IsNullOrWhiteSpace(param);
+			FilterOperator? castedOperator = param.ToFilterOperator();
+			if (castedOperator == null)
+			{
+				return !string.IsNullOrWhiteSpace(param);
+			}
+
+			return false;
 		}
 	}
 }

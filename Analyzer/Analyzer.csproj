@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="AnalyzerElement.cs" />
     <Compile Include="ExpressionBuilder.cs" />
+    <Compile Include="FileToWordsParser.cs" />
     <Compile Include="Filter.cs" />
     <Compile Include="FilterOperator.cs" />
     <Compile Include="FilterOperatorExtensions.cs" />
@@ -53,7 +54,6 @@
     <Compile Include="StateMachine\Rules\FinishRule.cs" />
     <Compile Include="StateMachine\Rules\BraceOpenRule.cs" />
     <Compile Include="StateMachine\Rules\BraceCloseRule.cs" />
-    <Compile Include="StateMachine\States\BaseState.cs" />
     <Compile Include="StateMachine\States\FinalState.cs" />
     <Compile Include="StateMachine\States\BraceOpenState.cs" />
     <Compile Include="StateMachine\States\BraceCloseState.cs" />

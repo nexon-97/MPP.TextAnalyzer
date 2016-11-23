@@ -1,8 +1,6 @@
-﻿using Analyzer.Extensions;
-
-namespace Analyzer.StateMachine.States
+﻿namespace Analyzer.StateMachine.States
 {
-	internal class BinaryOperatorState : BaseState, IState
+	internal class BinaryOperatorState : IState
 	{
 		public void OnStateEnter(IState from, string item)
 		{
