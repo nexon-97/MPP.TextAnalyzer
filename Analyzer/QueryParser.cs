@@ -34,7 +34,6 @@ namespace Analyzer
 				}
 				catch (StateMachine.StateMachineException e)
 				{
-					Console.WriteLine(e.Message);
 					return null;
 				}
 			}
@@ -98,17 +97,13 @@ namespace Analyzer
 			try
 			{
 				fsm.UpdateState(string.Empty);
-				Console.WriteLine("Query valid.");
 
 				return true;
 			}
 			catch (StateMachine.StateMachineException e)
 			{
-				Console.WriteLine(e.Message);
-				Console.WriteLine("Query invalid!");
+				return false;
 			}
-
-			return false;
 		}
 
 		private AnalyzerElement[] ToAnalyzerNotation(string[] notation)
