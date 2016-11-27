@@ -7,7 +7,7 @@ namespace Analyzer
 {
 	// Parses input string to an array of tokens, or an analyzer element
 
-	internal sealed class QueryParser
+	public sealed class QueryParser
 	{
 		private const char BracketOpener = '(';
 		private const char BracketCloser = ')';
@@ -35,7 +35,7 @@ namespace Analyzer
 				catch (StateMachine.StateMachineException e)
 				{
 					Console.WriteLine(e.Message);
-					break;
+					return null;
 				}
 			}
 

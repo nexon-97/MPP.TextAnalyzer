@@ -11,10 +11,14 @@ namespace Analyzer.StateMachine
 		public Dictionary<string, IState> States { get; private set; }
 		public List<ITransitionRule> Rules { get; private set; }
 
+		public static int BracketFactor { get; set; }
+
 		public StateMachine()
 		{
 			InitStates();
 			InitRules();
+
+			BracketFactor = 0;
 		}
 
 		private void InitStates()
@@ -60,12 +64,15 @@ namespace Analyzer.StateMachine
 			var operandToFinishRule = new FinishRule(operandState, finalState, 0);
 			var idleToBracketOpenerRule = new BraceOpenRule(idleState, bracketOpenState, 5);
 			var unaryToBracketOpenerRule = new BraceOpenRule(unaryOperatorState, bracketOpenState, 5);
-			var bracketOpenToOperandRule = new OperandRule(bracketOpenState, operandState, 4);
+			var doubleBracketOpenerRule = new BraceOpenRule(bracketOpenState, bracketOpenState, 4);
+			var binaryToBracketOpenerRule = new BraceOpenRule(binaryOperatorState, bracketOpenState, 5);
+			var bracketOpenToOperandRule = new OperandRule(bracketOpenState, operandState, 3);
 			var operandToBracketCloserRule = new BraceCloseRule(operandState, bracketCloseState, 5);
 			var bracketOpenerToCloserRule = new BraceCloseRule(bracketOpenState, bracketCloseState, 5);
 			var bracketCloserToFinishRule = new FinishRule(bracketCloseState, finalState, 1);
 			var bracketCloserToBinaryOpRule = new BinaryOperatorRule(bracketCloseState, binaryOperatorState, 2);
 			var binaryToUnaryOpRule = new UnaryOperatorRule(binaryOperatorState, unaryOperatorState, 3);
+			var doubleBracketCloserRule = new BraceCloseRule(bracketCloseState, bracketCloseState, 5);
 
 			Rules.Add(idleToOperandRule);
 			Rules.Add(idleToUnaryOpRule);
@@ -81,6 +88,9 @@ namespace Analyzer.StateMachine
 			Rules.Add(bracketOpenToOperandRule);
 			Rules.Add(binaryToUnaryOpRule);
 			Rules.Add(bracketCloserToBinaryOpRule);
+			Rules.Add(doubleBracketOpenerRule);
+			Rules.Add(doubleBracketCloserRule);
+			Rules.Add(binaryToBracketOpenerRule);
 		}
 
 		public void UpdateState(string item)

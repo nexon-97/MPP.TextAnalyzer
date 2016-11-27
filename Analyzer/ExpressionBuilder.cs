@@ -11,12 +11,6 @@ namespace Analyzer
 	public class ExpressionBuilder
 	{
 		public ILogger Logger { get; set; }
-		public Expression<Func<string[], string, bool>> OccurenceCondition { get; private set; }
-
-		public ExpressionBuilder()
-		{
-			OccurenceCondition = ((text, item) => Array.Exists(text, o => o.Equals(item)));
-		}
 
 		public Expression<FilterDelegate> Build(string expression)
 		{

@@ -21,7 +21,11 @@ namespace Analyzer.StateMachine.Rules
 			FilterOperator? castedOperator = param.ToFilterOperator();
 			if (castedOperator == null)
 			{
-				return !string.IsNullOrWhiteSpace(param);
+				return (
+					!string.IsNullOrWhiteSpace(param) &&
+					!param.Equals("(") &&
+					!param.Equals(")")
+				);
 			}
 
 			return false;

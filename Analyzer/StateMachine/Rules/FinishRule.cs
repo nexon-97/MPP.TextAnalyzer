@@ -17,7 +17,7 @@ namespace Analyzer.StateMachine.Rules
 
 		public bool CanTransit(string param)
 		{
-			return true;
+			return string.IsNullOrWhiteSpace(param);
 		}
 	}
 }

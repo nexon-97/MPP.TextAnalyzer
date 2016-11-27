@@ -5,11 +5,11 @@ using Analyzer;
 namespace UnitTests
 {
 	[TestClass]
-	public class UnitTest1
+	public class ExpressionBuilderExceptionsTest
 	{
 		[TestMethod]
 		[ExpectedException(typeof(ArgumentNullException))]
-		public void TestMethod1()
+		public void CheckNullArgument()
 		{
 			ExpressionBuilder builder = new ExpressionBuilder();
 			builder.Build(null);

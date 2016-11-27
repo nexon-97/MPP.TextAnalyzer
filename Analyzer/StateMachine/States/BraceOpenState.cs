@@ -4,7 +4,7 @@
 	{
 		public void OnStateEnter(IState from, string item)
 		{
-			
+			StateMachine.BracketFactor++;
 		}
 	}
 }
