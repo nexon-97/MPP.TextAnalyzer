@@ -55,6 +55,7 @@
     <Compile Include="ExpressionBuilderExceptionsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryParserTests.cs" />
+    <Compile Include="FilterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Analyzer\Analyzer.csproj">

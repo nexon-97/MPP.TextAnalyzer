@@ -68,7 +68,6 @@ namespace Analyzer.StateMachine
 			var binaryToBracketOpenerRule = new BraceOpenRule(binaryOperatorState, bracketOpenState, 5);
 			var bracketOpenToOperandRule = new OperandRule(bracketOpenState, operandState, 3);
 			var operandToBracketCloserRule = new BraceCloseRule(operandState, bracketCloseState, 5);
-			var bracketOpenerToCloserRule = new BraceCloseRule(bracketOpenState, bracketCloseState, 5);
 			var bracketCloserToFinishRule = new FinishRule(bracketCloseState, finalState, 1);
 			var bracketCloserToBinaryOpRule = new BinaryOperatorRule(bracketCloseState, binaryOperatorState, 2);
 			var binaryToUnaryOpRule = new UnaryOperatorRule(binaryOperatorState, unaryOperatorState, 3);
@@ -83,7 +82,6 @@ namespace Analyzer.StateMachine
 			Rules.Add(idleToBracketOpenerRule);
 			Rules.Add(unaryToBracketOpenerRule);
 			Rules.Add(operandToBracketCloserRule);
-			Rules.Add(bracketOpenerToCloserRule);
 			Rules.Add(bracketCloserToFinishRule);
 			Rules.Add(bracketOpenToOperandRule);
 			Rules.Add(binaryToUnaryOpRule);

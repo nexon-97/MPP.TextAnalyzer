@@ -43,6 +43,24 @@ namespace UnitTests
 		}
 
 		[TestMethod]
+		public void ValidQueryTest4()
+		{
+			QueryParser parser = new QueryParser();
+			var result = parser.Parse("((a anD Not B) OR (oral or not written) and not good)");
+
+			Assert.IsInstanceOfType(result, typeof(AnalyzerElement[]));
+		}
+
+		[TestMethod]
+		public void ValidQueryTest5()
+		{
+			QueryParser parser = new QueryParser();
+			var result = parser.Parse("singleword");
+
+			Assert.IsInstanceOfType(result, typeof(AnalyzerElement[]));
+		}
+
+		[TestMethod]
 		public void InvalidQueryTest1()
 		{
 			QueryParser parser = new QueryParser();
@@ -65,6 +83,24 @@ namespace UnitTests
 		{
 			QueryParser parser = new QueryParser();
 			var result = parser.Parse("not and word");
+
+			Assert.IsNull(result);
+		}
+
+		[TestMethod]
+		public void InvalidQueryTest4()
+		{
+			QueryParser parser = new QueryParser();
+			var result = parser.Parse("single word");
+
+			Assert.IsNull(result);
+		}
+
+		[TestMethod]
+		public void InvalidQueryTest5()
+		{
+			QueryParser parser = new QueryParser();
+			var result = parser.Parse("()");
 
 			Assert.IsNull(result);
 		}

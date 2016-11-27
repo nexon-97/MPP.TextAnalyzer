@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace WpfClient.Model
+namespace Analyzer
 {
 	public class FileToWordsParser
 	{
@@ -30,18 +30,30 @@ namespace WpfClient.Model
 
 		public string[] Parse(string path)
 		{
-			HashSet<string> words = new HashSet<string>();
-
-			string fileText = null;
 			try
 			{
-				fileText = File.ReadAllText(path);
-				return fileText.Split(delimeters, StringSplitOptions.RemoveEmptyEntries);
+				string fileText = File.ReadAllText(path);
+				return ParseText(fileText);
 			}
 			catch (Exception)
 			{
 				return null;
 			}
+		}
+
+		public string[] ParseText(string fileText)
+		{
+			HashSet<string> words = new HashSet<string>();
+
+			string[] parsedWords = fileText.Split(delimeters, StringSplitOptions.RemoveEmptyEntries);
+
+			// Convert to lowercase
+			for (int i = 0; i < parsedWords.Length; i++)
+			{
+				parsedWords[i] = parsedWords[i].ToLower();
+			}
+
+			return parsedWords;
 		}
 	}
 }

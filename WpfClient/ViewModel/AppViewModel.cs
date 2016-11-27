@@ -4,7 +4,6 @@ using System.Windows;
 using System.IO;
 using System.Diagnostics;
 using Analyzer;
-using WpfClient.Model;
 using WpfClient.Commands;
 
 namespace WpfClient.ViewModel
